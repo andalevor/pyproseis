@@ -18,8 +18,9 @@ def initialize_db_from_SPS(db_name, Rsps_name, Ssps_name, Xsps_name, rev):
     rec_seis_datum INTEGER, rec_water_depth REAL, rec_easting REAL,
     rec_northing REAL, rec_elev REAL, tape_num TEXT, record_num INTEGER,
     record_inc INTEGER, instrument_code INTEGER, chan INTEGER,
-    mid_easting REAL, mid_northing REAL, bin_easting REAL DEFAULT NULL,
-    bin_northing REAL DEFAULT NULL, bin_fold INTEGER DEFAULT NULL)''')
+    mid_easting REAL, mid_northing REAL, bin_number INTEGER DEFAULT NULL,
+    inline INTEGER DEFAULT NULL, xline INTEGER DEFAULT NULL,
+    bin_easting REAL DEFAULT NULL, bin_northing REAL DEFAULT NULL, bin_fold INTEGER DEFAULT NULL)''')
     for record in Xsps:
         src = Ssps[(record.src_line_num, record.src_point_num)]
         curr_rec = record.rec_point_num_from
@@ -29,7 +30,7 @@ def initialize_db_from_SPS(db_name, Rsps_name, Ssps_name, Xsps_name, rev):
             mid_x = (src.easting + rec.easting) / 2
             mid_y = (src.northing + rec.northing) / 2
             cursor.execute('''INSERT INTO traces VALUES(NULL,?,?,?,?,?,?,?,?,?,?,
-            ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,NULL)''',
+            ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,NULL,NULL,NULL,NULL)''',
                            (record.src_line_num, record.src_point_num,
                             record.point_idx, src.point_code, src.stat_corr,
                             src.point_depth, src.seis_datum, src.uphole_time,
